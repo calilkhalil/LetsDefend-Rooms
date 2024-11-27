@@ -118,7 +118,7 @@ cat events.json | jq '.Records[] | select(.eventName == "CreateUser")' -c
 
 **Explanation of the Command:**
 - `cat events.json`: Reads the content of the `events.json` file.
-- `jq '.Records[] | select(.eventName == "CreateUser")' -c`: Uses jq to parse the JSON and filter records where the eventName is CreateUser.
+- `jq '.Records[] | select(.eventName == "CreateUser")' -c`: Uses `jq` to parse the JSON and filter records where the `eventName` is `CreateUser`.
 
 **Output:**
 ![CreateUser Attempt](5.png)
@@ -129,28 +129,35 @@ From the output, we can see that the attacker attempted to maintain persistence 
 
 ### Question 5: In order of occurrence, which IAM users were involved in this persistence attempt?
 
+To identify which IAM users were involved in the persistence attempt, we executed the following command:
+
+```bash
+cat events.json | jq '.Records[] | select(.eventName == "CreateUser") | .errorMessage' -c
+```
+
+**Explanation of the Command:**
+- `cat events.json`: Reads the content of the `events.json` file.
+- `jq '.Records[] | select(.eventName == "CreateUser")' -c`: Uses `jq` to parse the JSON and filter records where the `eventName` is `CreateUser`, and extract the `errorMessage`
+
+**Output:**
+![ErrorMessage CreateUser ApiCall](6.png)
+
+From the output, we are seeing the errorMessage field, which shows the users that the attacker attempted to create. The error messages indicate unauthorized attempts to perform the CreateUser action. These messages reveal that the attacker tried to create the following IAM users, in order: 
+
+1. `rooter`
+2. `adm1n`
+3. `dev0ps_user`
+
+By analyzing the `errorMessage`, we can identify the specific user creation attempts made by the attacker, even though they were unsuccessful due to insufficient permissions (`AccessDenied`).
+
 ---
 
 ### Question 6: Were the persistence attempts successful?
 
+`No`, the persistence attempts were not successful. As explained in the previous questions, the attacker tried to create new IAM users to maintain persistence within the environment. However, these attempts failed due to insufficient permissions. The `errorMessage` field in the logs indicated `AccessDenied` errors for each `CreateUser` action.
+
+Basically, the analyzed error messages show that the attacker did not have the necessary permissions to create new users, resulting in unsuccessful persistence attempts.
+
 ---
 
 ### Question 7: Which S3 bucket was affected in this attack?
-
----
-
-### Question 8: How did the attacker check for protection on this resource?
-
----
-
-### Question 9: How did the attacker remove the protection on this resource?
-
----
-
-### Question 10: What file did the attacker exfiltrate?
-
----
-
-### Question 11: What was the name of the ransom note?
-
----
