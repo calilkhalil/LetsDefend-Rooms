@@ -98,17 +98,16 @@ From the output, we can see that the first successful reconnaissance API call wa
 To understand how the attacker attempted to maintain persistence within the environment, we executed the following commands:
 
 ````bash
-cat events.json | jq '.Records[] | .eventName' -c | sort | uniq -c
+cat events.json | jq '.Records[] | select(.userIdentity.userName == "s3user") | .eventName' -c | uniq -c
 ````
 
 **Explanation of the Command:**
 `cat events.json`: Reads the content of the `events.json` file.
-`jq '.Records[] | .eventName' -c`: Uses jq to parse the JSON and extract the `eventName` field from each record.
-`sort`: Sorts the usernames alphabetically.
-`uniq -c`: Counts the unique occurrences of each username.
+`jq '.Records[] | select(.userIdentity.userName == "s3user") | .eventName' -c`: Uses jq to parse the JSON, filter records where the `userName` is `s3user`, and extract the `eventName` field.
+`uniq -c`: Counts the unique occurrences of each event name.
 
 **Output:**
-![Event Name Analysis](5.png)
+![Event Name Analysis](3.png)
 
 Next, we filtered the events to focus on the `CreateUser` event:
 
