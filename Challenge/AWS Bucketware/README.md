@@ -37,10 +37,10 @@ cat events.json | jq '.Records[] | .userIdentity.userName' -c | sort | uniq -c
 ```
 
 **Explanation of the Command:**
-`cat events.json`: Reads the content of the `events.json` file.
-`jq '.Records[] | .userIdentity.userName' -c`: Uses jq to parse the JSON and extract the userName field from each record.
-`sort`: Sorts the usernames alphabetically.
-`uniq -c`: Counts the unique occurrences of each username.
+- `cat events.json`: Reads the content of the `events.json` file.
+- `jq '.Records[] | .userIdentity.userName' -c`: Uses jq to parse the JSON and extract the userName field from each record.
+- `sort`: Sorts the usernames alphabetically.
+- `uniq -c`: Counts the unique occurrences of each username.
 
 **Output:**
 ![Compromised IAM user in CloudTrail logs](2.png)
@@ -59,9 +59,9 @@ cat events.json | jq '.Records[] | select(.userIdentity.userName == "s3user") | 
 
 **Explanation of the Command:**
 
-`cat events.json`: Reads the content of the `events.json` file.
-`jq '.Records[] | select(.userIdentity.userName == "s3user") | .eventName' -c`: Uses jq to parse the JSON, filter records where the `userName` is `s3user`, and extract the `eventName` field.
-`uniq -c`: Counts the unique occurrences of each event name.
+- `cat events.json`: Reads the content of the `events.json` file.
+- `jq '.Records[] | select(.userIdentity.userName == "s3user") | .eventName' -c`: Uses jq to parse the JSON, filter records where the `userName` is `s3user`, and extract the `eventName` field.
+- `uniq -c`: Counts the unique occurrences of each event name.
 
 **Output:**
 ![Reconnaissance API calls](3.png)
@@ -83,8 +83,8 @@ cat events.json | jq '.Records[] | select(.userIdentity.userName == "s3user") | 
 ````
 
 **Explanation of the Command:**
-`cat events.json`: Reads the content of the events.json file.
-`jq '.Records[] | select(.userIdentity.userName == "s3user") | select(.eventName == "ListBuckets")'`: Uses jq to parse the JSON, filter records where the userName is s3user and the eventName is ListBuckets.
+- `cat events.json`: Reads the content of the events.json file.
+- `jq '.Records[] | select(.userIdentity.userName == "s3user") | select(.eventName == "ListBuckets")'`: Uses jq to parse the JSON, filter records where the userName is s3user and the eventName is ListBuckets.
 
 **Output:**
 ![Sucessful API calls](4.png)
@@ -102,9 +102,10 @@ cat events.json | jq '.Records[] | select(.userIdentity.userName == "s3user") | 
 ````
 
 **Explanation of the Command:**
-`cat events.json`: Reads the content of the `events.json` file.
-`jq '.Records[] | select(.userIdentity.userName == "s3user") | .eventName' -c`: Uses jq to parse the JSON, filter records where the `userName` is `s3user`, and extract the `eventName` field.
-`uniq -c`: Counts the unique occurrences of each event name.
+
+- `cat events.json`: Reads the content of the `events.json` file.
+- `jq '.Records[] | select(.userIdentity.userName == "s3user") | .eventName' -c`: Uses jq to parse the JSON, filter records where the `userName` is `s3user`, and extract the `eventName` field.
+- `uniq -c`: Counts the unique occurrences of each event name.
 
 **Output:**
 ![Event Name Analysis](3.png)
@@ -116,10 +117,40 @@ cat events.json | jq '.Records[] | select(.eventName == "CreateUser")' -c
 ```
 
 **Explanation of the Command:**
-`cat events.json`: Reads the content of the `events.json` file.
-`jq '.Records[] | select(.eventName == "CreateUser")' -c`: Uses jq to parse the JSON and filter records where the eventName is CreateUser.
+- `cat events.json`: Reads the content of the `events.json` file.
+- `jq '.Records[] | select(.eventName == "CreateUser")' -c`: Uses jq to parse the JSON and filter records where the eventName is CreateUser.
 
 **Output:**
 ![CreateUser Attempt](5.png)
 
 From the output, we can see that the attacker attempted to maintain persistence by creating new IAM users. However, the `errorCode` field indicates `AccessDenied`, meaning the attacker did not have the necessary permissions to successfully create new users. Therefore, the attempt to maintain persistence was not successful.
+
+---
+
+### Question 5: In order of occurrence, which IAM users were involved in this persistence attempt?
+
+---
+
+### Question 6: Were the persistence attempts successful?
+
+---
+
+### Question 7: Which S3 bucket was affected in this attack?
+
+---
+
+### Question 8: How did the attacker check for protection on this resource?
+
+---
+
+### Question 9: How did the attacker remove the protection on this resource?
+
+---
+
+### Question 10: What file did the attacker exfiltrate?
+
+---
+
+### Question 11: What was the name of the ransom note?
+
+---
