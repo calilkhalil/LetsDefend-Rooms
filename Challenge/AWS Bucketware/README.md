@@ -251,8 +251,6 @@ From the output, we can see that the name of the ransom note is `ransomenote.txt
 
 ## Conclusion
 
-![Completed](12.png)
-
 ### Incident Summary:
 
 In this challenge, we analyzed a security incident involving compromised AWS credentials used to establish persistence within a cloud environment and propagate large-scale phishing campaigns. The attacker leveraged the compromised credentials to perform various actions, including reconnaissance, persistence attempts, and exfiltration of sensitive data.
@@ -264,6 +262,8 @@ The attacker attempted to maintain persistence within the environment by creatin
 The affected S3 bucket in this attack was identified as `webrew-dev-backup`. This bucket was targeted by the attacker using the `ListObjects` action to list the objects within the bucket. The attacker checked for protection on the `webrew-dev-backup` bucket by attempting to get the bucket versioning configuration using the `GetBucketVersioning` action. This action is used to retrieve the versioning state of an S3 bucket, which can help the attacker determine if versioning is enabled and if any protection mechanisms are in place.
 
 The attacker removed the protection on the `webrew-dev-backup` bucket by changing the bucket versioning configuration. The `PutBucketVersioning` action was used to suspend the versioning state of the S3 bucket, effectively removing the protection mechanisms that were in place. The attacker exfiltrated the file `highprofilecoffeeorders.csv` from the `webrew-dev-backup` bucket. This file was accessed using the `GetObject` action, indicating that it was retrieved by the attacker. The name of the ransom note was identified as `ransomenote.txt`. This file was uploaded to the `webrew-dev-backup` bucket using the `PutObject` action, indicating that it was placed there by the attacker.
+
+![Completed](12.png)
 
 ### Key Takeaways:
 
