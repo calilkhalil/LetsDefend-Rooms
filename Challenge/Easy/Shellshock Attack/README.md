@@ -38,6 +38,8 @@ In the HTTP Stream, we can see the response header indicating the server, versio
 
 ![Operating System](2.png)
 
+So, we can conclude that the operating system running on the server is Ubuntu, as indicated by the response headers in the HTTP stream analysis.
+
 ---
 
 ### Question 2: What is the application server and version running on the target system?
