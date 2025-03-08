@@ -54,8 +54,6 @@ This happens because many servers (like Apache, Nginx, or IIS) automatically inc
 
 Still in the same `HTTP Stream`, the exploitation of the Shellshock vulnerability on the web server is clearly visible. In the HTTP User-Agent header, the attacker injected malicious code:
 
-![Shellshock Attack](4.png)
-
 ```bash
 () { :;}; /bin/ping -c1 10.246.50.2
 ```
@@ -64,6 +62,8 @@ Still in the same `HTTP Stream`, the exploitation of the Shellshock vulnerabilit
 
 - `() { :;};`: is an empty Bash function that exploits the Shellshock vulnerability.
 - `/bin/ping -c1 10.246.50.2`: is the command executed by the server if Bash is vulnerable, demonstrating a [`Remote Code Execution`](https://en.wikipedia.org/wiki/Arbitrary_code_execution) as described by the vulnerability earlier.
+
+![Shellshock Attack](4.png)
 
 In summary, this occurs because web servers configured with CGI ([`Common Gateway Interface`](https://en.wikipedia.org/wiki/Common_Gateway_Interface)) expose environment variables (such as `User-Agent`) to Bash, causing the server to process `User-Agent` as a Bash function and execute the subsequent command, even if the function is empty.
 
