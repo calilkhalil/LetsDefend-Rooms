@@ -1,7 +1,7 @@
 # **Challenge**
 
 **Author**: Hakal  
-**Title**: Port Scan Activity
+**Title**: Port Scan Activity  
 **Level**: Easy
 
 ---
